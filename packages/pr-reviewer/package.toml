@@ -1,0 +1,16 @@
+[package]
+name        = "pr-reviewer"
+version     = "0.1.0"
+description = "Reviews open pull requests that request your review, on GitHub (gh) and Gitea (tea): one evidence-backed review per PR, never a merge"
+author      = "stump.wtf"
+homepage    = "https://github.com/stump-wtf/harness-stable"
+
+[harness]
+harness     = "claude-code"
+prompt_file = "prompts/review.md"
+auto_accept = true
+quiet       = true
+max_turns   = 80
+
+[requests]
+network = true

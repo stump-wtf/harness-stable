@@ -1,0 +1,16 @@
+[package]
+name        = "issue-triager"
+version     = "0.1.0"
+description = "Triages open issues on GitHub (gh) and Gitea (tea): checks them against the code, sizes them with the repo's own labels, and closes only duplicates and already-fixed issues, with evidence"
+author      = "stump.wtf"
+homepage    = "https://github.com/stump-wtf/harness-stable"
+
+[harness]
+harness     = "claude-code"
+prompt_file = "prompts/triage.md"
+auto_accept = true
+quiet       = true
+max_turns   = 80
+
+[requests]
+network = true

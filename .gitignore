@@ -1,0 +1,2 @@
+# Agent worktrees. A worktree visible to git, builds or linters breaks all three.
+.claude/worktrees/
