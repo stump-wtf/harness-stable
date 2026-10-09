@@ -13,6 +13,7 @@
 //
 // @joestump 10/07/2026 - Added with the first two packages, pr-reviewer and
 // issue-triager.
+// @joestump 10/09/2026 - Every package must ship a setup README.
 package stable
 
 import (
@@ -148,6 +149,27 @@ func TestPackagesLoad(t *testing.T) {
 				}
 			}
 		})
+	}
+}
+
+// TestEveryPackageHasASetupReadme: a package's manifest says what it runs,
+// not what an operator has to provide. Its credentials, environment
+// variables, the account it acts as, and the schedule and workdir that
+// install leaves to the harness table are invisible unless you read the
+// prompt. Every package ships a README.md that says so.
+func TestEveryPackageHasASetupReadme(t *testing.T) {
+	for _, name := range packages(t) {
+		raw, err := os.ReadFile(filepath.Join("packages", name, "README.md"))
+		if err != nil {
+			t.Errorf("packages/%s has no README.md: document its setup (credentials, env vars, the [harness.%s] table to add)", name, name)
+			continue
+		}
+		text := string(raw)
+		for _, must := range []string{"harness agent install stump-wtf/" + name, "[harness." + name + "]", "env_file"} {
+			if !strings.Contains(text, must) {
+				t.Errorf("packages/%s/README.md never mentions %q; a setup README shows the install, the table and where secrets go", name, must)
+			}
+		}
 	}
 }
 

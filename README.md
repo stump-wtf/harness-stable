@@ -8,12 +8,17 @@ triggers, so installing one never makes anything run on its own.
 
 | Package | What it does |
 |---|---|
-| `pr-reviewer` | Reviews open pull requests that request your review, on GitHub (`gh`) and Gitea (`tea`). One review per PR, backed by evidence. It requests changes, approves or comments, and never merges or pushes. |
-| `issue-triager` | Triages open issues: checks each against the code, applies the repository's own size and type labels, and closes only duplicates and already-fixed issues, with the evidence in a comment. |
+| [`pr-reviewer`](packages/pr-reviewer/README.md) | Reviews open pull requests that request your review, on GitHub (`gh`) and Gitea (`tea`). One review per PR, backed by evidence. It requests changes, approves or comments, and never merges or pushes. |
+| [`issue-triager`](packages/issue-triager/README.md) | Triages open issues: checks each against the code, applies the repository's own size and type labels, and closes only duplicates and already-fixed issues, with the evidence in a comment. |
 
 Both are one-shots. They need a Harness release newer than v0.11.0, the first
 to let a package ship its prompt (`prompt_file` in `package.toml`); v0.11.0
 refuses that key at install.
+
+Each package's README covers its setup: the forge logins and token scopes it
+needs, the environment variables it reads, the account it acts as, and the
+harness table to add after install. Read it, and the prompt it points to,
+before you install.
 
 ## Install
 
@@ -64,7 +69,9 @@ it moves the pin.
 
 ## Contributing a package
 
-Add `packages/<name>/package.toml` and its `prompts/`, then run `make check`.
+Add `packages/<name>/package.toml`, its `prompts/`, and a `README.md` that
+documents its setup (credentials, environment variables, and the harness
+table to add), then run `make check`.
 `stable_test.go` applies Harness's manifest rules and its high-severity
 content scan, so a package Harness would refuse fails CI here first.
 Issues and pull requests are welcome on the
